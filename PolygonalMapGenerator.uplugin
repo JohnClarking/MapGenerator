@@ -10,7 +10,7 @@
 	"DocsURL": "https://github.com/Moichia/MapGenerator",
 	"MarketplaceURL": "https://github.com/Moichia/MapGenerator",
 	"SupportURL": "https://github.com/Moichia/MapGenerator",
-	"CanContainContent": false,
+	"CanContainContent": true,
 	"IsBetaVersion": true,
 	"Installed": false,
 	"Modules": [
