@@ -63,7 +63,7 @@ Place the Actor in your level somewhere and call `CreateMap` on the `IslandMapGe
 
 #Example Project
 
-An example project using this system [can be found here](https://github.com/Moichia/UnrealPolygonalMapGenExample).
+An example project using this system [can be found here](https://github.com/Jay2645/UnrealPolygonalMapGenExample).
 
 #Changes from Source Article
 
