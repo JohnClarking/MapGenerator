@@ -1,9 +1,5 @@
 # Polygonal Map Generator
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://github.com/Jay2645/Unreal-Polygonal-Map-Gen/graphs/commit-activity)
-
-For legal reasons I'm not allowed to work on this currently. However, I'm still able to review and OK pull requests if need be in the future. This should also work for Unreal 4.21 and (probably) 4.22.
-
 ## Created for Unreal Engine 4.21
 
 ![highresscreenshot00005](https://user-images.githubusercontent.com/2058763/50578306-17d8b880-0ded-11e9-8b8d-b7641fcd7479.png)
@@ -20,7 +16,7 @@ It supports Unreal Engine version 4.21.x; you can *probably* use it for earlier/
 
 ![highresscreenshot00003](https://user-images.githubusercontent.com/2058763/50556436-f0b7a500-0c8d-11e9-92fe-0da8a22dbee8.png)
 
-This version is designed to be a fairly barebones port; if you need extra features, [I've created a downstream fork](https://github.com/Jay2645/IslandGenerator) which supports things like procedural river names.
+This version is designed to be a fairly barebones port; if you need extra features, [I've created a downstream fork](https://github.com/moichia/IslandGenerator) which supports things like procedural river names.
 
 # Installation
 
@@ -95,7 +91,7 @@ If you wanted to implement custom water generation, a good way to do so would be
 
 There's also a number of places to "hook" into the island generation code if you wanted to modify the existing logic of a certain step or add your own implementations.
 
-As I mentioned, I tried to keep this port pretty close to the original. I've added a couple things for convenience, such as actual mesh generation as well as a data structure to keep track of rivers (`URiver`). However, while the rivers are placed, they do not get rendered and the underlying mesh is still the same -- you'll have to either roll your own option or look at [that downstream fork I mentioned earlier](https://github.com/Jay2645/IslandGenerator).
+As I mentioned, I tried to keep this port pretty close to the original. I've added a couple things for convenience, such as actual mesh generation as well as a data structure to keep track of rivers (`URiver`). However, while the rivers are placed, they do not get rendered and the underlying mesh is still the same -- you'll have to either roll your own option or look at [that downstream fork I mentioned earlier](https://github.com/moichia/IslandGenerator).
 
 Speaking of mesh generation; it's not perfect -- it does its best to match each triangle to an individual biome for the purposes of assigning materials, but it comes out a bit jagged. 
 
