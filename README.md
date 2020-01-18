@@ -1,4 +1,4 @@
-# Polygonal Map Generator
+# Unreal Engine 4 Map Generator
 
 ## Created for Unreal Engine 4.21
 
