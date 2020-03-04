@@ -420,7 +420,7 @@ void AIslandMapGenerator::DetermineBiomes()
 
 	UE_LOG(LogWorldGen, Log, TEXT("Biomes determined in %f seconds."), FPlatformTime::Seconds() - CurrentGenerationTime);
 }
-void AIslandMapGenerator::CreateHeightmap(const FHeightmapCreationData HeightmapGenerationOptions, const FIslandGeneratorDelegate OnHeightmapGenerationFinished)
+void AIslandMapGenerator::CreateHeightmap(const int32 HeightmapSize, const FIslandGeneratorDelegate OnHeightmapGenerationFinished)
 {
 	if (MapGraph == NULL)
 	{
@@ -436,7 +436,7 @@ void AIslandMapGenerator::CreateHeightmap(const FHeightmapCreationData Heightmap
 
 	FIslandGeneratorDelegate finalizationFinished;
 	finalizationFinished.BindDynamic(this, &AIslandMapGenerator::OnHeightmapFinished);
-	MapHeightmap->CreateHeightmap(MapGraph, BiomeManager, MoistureDistributor, HeightmapGenerationOptions, finalizationFinished);
+	MapHeightmap->CreateHeightmap(MapGraph, BiomeManager, MoistureDistributor, HeightmapSize, finalizationFinished);
 }
 
 void AIslandMapGenerator::OnHeightmapFinished()
@@ -468,11 +468,11 @@ void AIslandMapGenerator::DrawDelaunayGraph()
 	UMapDebugVisualizer::DrawDebugDelaunayGrid(this, IslandData.PolygonMapSettings, MapGraph);
 }
 
-void AIslandMapGenerator::DrawHeightmap(float PixelSize, float PixelHeightMultiplier)
+void AIslandMapGenerator::DrawHeightmap(float PixelSize)
 {
 	if (MapHeightmap == NULL || !bHasGeneratedHeightmap)
 	{
 		return;
 	}
-	UMapDebugVisualizer::DrawDebugPixelGrid(this, IslandData.PolygonMapSettings, MapHeightmap->GetMapData(), MapHeightmap->HeightmapSize, PixelSize, PixelHeightMultiplier);
+	UMapDebugVisualizer::DrawDebugPixelGrid(this, IslandData.PolygonMapSettings, MapHeightmap->GetMapData(), IslandData.Size, PixelSize);
 }

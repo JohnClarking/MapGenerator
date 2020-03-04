@@ -6,7 +6,7 @@
 #include "PolygonMap.h"
 #include "MapDebugVisualizer.h"
 
-void UMapDebugVisualizer::DrawDebugPixelGrid(AActor* Actor, const FWorldSpaceMapData& MapData, const TArray<FMapData>& HeightmapData, int32 HeightmapSize, float PixelSize, float PixelHeightMultiplier)
+void UMapDebugVisualizer::DrawDebugPixelGrid(AActor* Actor, const FWorldSpaceMapData& MapData, const TArray<FMapData>& HeightmapData, int32 HeightmapSize, float PixelSize)
 {
 	UWorld* world = Actor->GetWorld();
 	if (world == NULL)
@@ -40,9 +40,7 @@ void UMapDebugVisualizer::DrawDebugPixelGrid(AActor* Actor, const FWorldSpaceMap
 				color = FColor(147, 198, 255);
 			}
 
-			float pixelHeight = FMath::FloorToInt(mapData.Elevation * ((MapData.ElevationScale / 100.0f) * PixelHeightMultiplier) + MapData.ElevationOffset);
-
-			FVector v0 = offset + FVector(x * PixelSize, y * PixelSize, pixelHeight);
+			FVector v0 = offset + FVector(mapData.Point.X * PixelSize, mapData.Point.Y * PixelSize, FMath::FloorToInt(mapData.Elevation * (MapData.ElevationScale / 100.0f)) * PixelSize + 1.0f);
 			FVector v1 = FVector(v0.X, v0.Y + PixelSize, v0.Z);
 			FVector v2 = FVector(v0.X + PixelSize, v0.Y, v0.Z);
 			FVector v3 = FVector(v2.X, v1.Y, v0.Z);

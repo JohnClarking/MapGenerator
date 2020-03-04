@@ -246,73 +246,6 @@ struct POLYGONALMAPGENERATOR_API FWorldSpaceMapData
 	}
 };
 
-USTRUCT(BlueprintType)
-struct POLYGONALMAPGENERATOR_API FPointInterpolationData
-{
-	GENERATED_BODY()
-	UPROPERTY(Category = "Map", BlueprintReadWrite, EditAnywhere)
-	bool bTriangleIsValid;
-	UPROPERTY(Category = "Map", BlueprintReadWrite, EditAnywhere)
-	FMapCorner SourceTriangle;
-	UPROPERTY(Category = "Map", BlueprintReadWrite, EditAnywhere)
-	float InterpolatedElevation;
-	UPROPERTY(Category = "Map", BlueprintReadWrite, EditAnywhere)
-	float InterpolatedMoisture;
-
-	FPointInterpolationData()
-	{
-		bTriangleIsValid = false;
-		InterpolatedElevation = 0.0f;
-		InterpolatedMoisture = 0.0f;
-	}
-};
-
-UENUM(BlueprintType)
-enum class EHeightmapGenerationType : uint8
-{
-	Foreground,
-	Background
-};
-
-USTRUCT(BlueprintType)
-struct POLYGONALMAPGENERATOR_API FHeightmapCreationData
-{
-	GENERATED_BODY()
-
-		// Running heightmap generation in the foreground is a bit faster, but locks up the game thread.
-		// Running heightmap generation in the background takes longer, but the game thread remains free for
-		// you to show a loading bar, have the player run around a different level, or whatever you may need.
-		UPROPERTY(Category = "Map", BlueprintReadWrite, EditAnywhere)
-		EHeightmapGenerationType HeightmapGenerationPriority;
-
-	// This is the size of the heightmap, in pixels.
-	// Increasing this increases loading times exponentially, but gives more detail on the heightmap.
-	// Remember: Setting this to 1024 means you need to generate 1024 * 1024 pixels. It may take a while (1-2 minutes).
-	UPROPERTY(Category = "Map", BlueprintReadWrite, EditAnywhere)
-		int32 Size;
-
-	// Whether the centers of a triangle should be used for interpolation.
-	// This essentially splits every Delaunay triangle into the map into 3 separate triangles, with their shared vertex being the voronoi center.
-	// This will marginally slow down heightmap generation, but the provided interpolation data is more accurate.
-	// If you don't care about interpolation data and just want to know if a point is in a triangle or not, set this to false for better performance.
-	UPROPERTY(Category = "Map", BlueprintReadWrite, EditAnywhere)
-		bool bUseTriangleCentersForInterpolation;
-
-	// How many blurring steps we should use for post-processing.
-	// A value of 0 will disable blurring entirely, giving the heightmap a very "polygonal" appearance.
-	// A value of around 5 usually gives fairly good results, as the polygon edges get blurred away.
-	UPROPERTY(Category = "Map", BlueprintReadWrite, EditAnywhere)
-		uint8 PostProcessBlurSteps;
-
-	FHeightmapCreationData()
-	{
-		HeightmapGenerationPriority = EHeightmapGenerationType::Background;
-		Size = 256;
-		bUseTriangleCentersForInterpolation = true;
-		PostProcessBlurSteps = 5;
-	}
-};
-
 /**
 * The PolygonMap is a class which uses a Voronoi diagram to collect data about a graph of
 * points on the XY plane.
@@ -508,24 +441,23 @@ public:
 	// If it does, this function returns true. Otherwise, it returns false.
 	UFUNCTION(BlueprintPure, Category = "World Generation|Island Generation|Graph")
 	bool CenterContainsPoint(const FVector2D& Point, const FMapCenter& Center) const;
-	// Returns the interpolated data from a 2D map coordinate.
-	// The MapCorner reference will be populated with data from the triangle that the point is in.
-	// If the triangle is invalid, bTriangleIsValid will be set to false.
-	// If the triangle is valid, the moisture and elevation will be interpolated.
 	UFUNCTION(BlueprintPure, Category = "World Generation|Island Generation|Graph")
-	FPointInterpolationData CornerContainsPoint(const FVector2D& Point, const FMapCorner& Corner, bool bInterpolateUsingTriangleCenter) const;
+	bool CornerContainsPoint(const FVector2D& Point, const FMapCorner& Corner) const;
 
+	// Returns the Z position of a 2D map coordinate.
+	// The MapCorner reference will be populated with data from the triangle that the point is in.
+	// If the MapCorner's index is below 0, the point lies outside of the generated map.
 	UFUNCTION(BlueprintPure, Category = "World Generation|Island Generation|Graph")
-	FPointInterpolationData FindInterpolatedDataForPoint(const FVector2D& Point, bool bInterpolateUsingTriangleCenters);
+	float CalculateZPosition(FVector2D MapLocation, FMapCorner& OutMapCorner);
 
 	// Calculates the interpolated Z position of a 2D point between 3 MapCenters.
-	/*UFUNCTION(BlueprintPure, Category = "World Generation|Island Generation|Graph")
+	UFUNCTION(BlueprintPure, Category = "World Generation|Island Generation|Graph")
 	float CalculateZPositionBetweenCenters(FMapCenter CenterA, FMapCenter CenterB, FMapCenter CenterC, FVector2D MapLocation) const;
 
 	UFUNCTION(BlueprintPure, Category = "World Generation|Island Generation|Graph")
 	float CalculateMoistureAtPoint(FVector2D MapLocation, FMapCorner& OutMapCorner);
 	UFUNCTION(BlueprintPure, Category = "World Generation|Island Generation|Graph")
-	float InterpolateMapDataMoisture(FMapData PointA, FMapData PointB, FMapData PointC, FVector2D MapLocation) const;*/
+	float InterpolateMapDataMoisture(FMapData PointA, FMapData PointB, FMapData PointC, FVector2D MapLocation) const;
 private:
 	/// Graph Data
 	// The points in our graph
@@ -551,11 +483,6 @@ private:
 	// The size of an edge in the 2D map
 	UPROPERTY()
 	int32 MapSize;
-
-	// The last corner we found
-	// Used to optimize searching for which triangle a point belongs in
-	UPROPERTY()
-	FMapCorner LastFoundCorner;
 
 	// ALL MapData from both MapCenters and MapCorners.
 	// Must be compiled first.
