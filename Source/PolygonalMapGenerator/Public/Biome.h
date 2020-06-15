@@ -16,5 +16,18 @@
 * limitations under the License.
 */
 
-#include "PolygonalMapGeneratorTests.h"
+#pragma once
 
+#include "CoreMinimal.h"
+#include "UObject/NoExportTypes.h"
+#include "Biome.generated.h"
+
+/**
+ * 
+ */
+UCLASS()
+class POLYGONALMAPGENERATOR_API UBiome : public UObject
+{
+	GENERATED_BODY()
+	
+};
