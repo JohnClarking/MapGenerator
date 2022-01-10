@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-#include "Rivers/IslandRivers.h"
+#include "IslandRivers.h"
 
 UIslandRivers::UIslandRivers()
 {

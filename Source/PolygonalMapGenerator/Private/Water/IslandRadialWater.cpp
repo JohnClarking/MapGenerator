@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-#include "Water/IslandRadialWater.h"
+#include "IslandRadialWater.h"
 
 UIslandRadialWater::UIslandRadialWater()
 {

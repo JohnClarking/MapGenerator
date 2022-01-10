@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-#include "Water/IslandWater.h"
+#include "IslandWater.h"
 #include "RandomSampling/SimplexNoise.h"
 
 UIslandWater::UIslandWater()

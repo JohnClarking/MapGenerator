@@ -24,7 +24,7 @@
 * or copy at http://opensource.org/licenses/MIT)
 */
 
-#include "RandomSampling/SimplexNoise.h"
+#include "SimplexNoise.h"
 
 #include <cstdint>  // int32_t/uint8_t
 

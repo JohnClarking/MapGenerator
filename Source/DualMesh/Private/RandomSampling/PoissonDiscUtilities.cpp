@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-#include "RandomSampling/PoissonDiscUtilities.h"
+#include "PoissonDiscUtilities.h"
 
 void UPoissonDiscUtilities::Distribute2D(TArray<FVector2D>& Samples, int32 Seed, FVector2D Size, FVector2D StartLocation, float MinimumDistance, int32 MaxStepSamples, bool WrapX, bool WrapY)
 {

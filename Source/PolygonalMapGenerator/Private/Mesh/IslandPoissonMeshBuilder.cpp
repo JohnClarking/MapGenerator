@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-#include "Mesh/IslandPoissonMeshBuilder.h"
+#include "IslandPoissonMeshBuilder.h"
 #include "DualMeshBuilder.h"
 
 UIslandPoissonMeshBuilder::UIslandPoissonMeshBuilder()

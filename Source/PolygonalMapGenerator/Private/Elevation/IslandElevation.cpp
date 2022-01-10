@@ -15,7 +15,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-#include "Elevation/IslandElevation.h"
+#include "IslandElevation.h"
 
 TArray<FTriangleIndex> UIslandElevation::FindCoastTriangles(UTriangleDualMesh* Mesh, const TArray<bool>& r_ocean) const
 {

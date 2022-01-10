@@ -16,7 +16,7 @@
 * limitations under the License.
 */
 
-#include "Moisture/IslandMoisture.h"
+#include "IslandMoisture.h"
 
 TSet<FPointIndex> UIslandMoisture::FindRiverbanks(UTriangleDualMesh* Mesh, const TArray<int32>& s_flow) const
 {

@@ -8,7 +8,7 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "GenericPlatform/GenericPlatform.h"
+#include "GenericPlatform.h"
 #include "DelaunayHelper.generated.h"
 
 

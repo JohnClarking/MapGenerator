@@ -19,7 +19,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Water/IslandWater.h"
+#include "IslandWater.h"
 #include "IslandSquareWater.generated.h"
 
 /**
